@@ -1,0 +1,175 @@
+<!doctype html>
+<html style="height:100%;">
+<head>
+    <title>Tagger</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet"></link>
+</head>
+<body style="height:100%;">
+<nav id="sidebar" style="
+            width: 25%;
+            height: 100%;
+            float: left;
+            z-index: 8000;
+            margin-bottom: 0px;">
+    <div class="panel panel-default" style="height: 100%;">
+        <div class="panel-heading">
+            <h3 class="panel-title">Labels</h3>
+        </div>
+        <script>
+        var label = function(id, name) {
+          window.location.replace("/label/" + id + "?name=" + name);
+        }
+        </script>
+        <div class="panel-body">
+            <div class="list-group">
+              {% for label in labels %}
+                <div class="list-group-item">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="id">{{ label.id }}</span>
+                        {% if label.name %}
+                            <text style="background-color:#E5E7E9;" class="form-control custom-control" style="resize:none">{{ label.name }}</text>
+                            <span class="input-group-btn">
+                                <!-- <button class="btn btn-danger" type="button">-</button> -->
+                            </span>
+                        {% else %}
+                            <input id= "{{ label.id }}" onkeydown="if (event.keyCode == 13) { label(this.id, this.value); }" type="text" class="form-control" placeholder="label name" ></input>
+                            <span class="input-group-btn">
+                                <!-- <button class="btn btn-danger" type="button">-</button> if (event.keyCode == 13) { label(this.id, this.value); } -->
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!--populate-->
+</nav>
+<div id="content" class="container" style="
+            width: 75%;
+            height: 100%;
+            float: right;
+            z-index: 8000;
+            margin-bottom:
+            0px;">
+    <div style="overflow: scroll">
+        <canvas id="canvas" style="width:100%; height:90%; margin: 0; padding: 0;"></canvas>
+    </div>
+    <!-- <a href="/next" class="btn btn-primary" style="float:left;" type="button">
+      <span class="glyphicon glyphicon-arrow-left"></span>
+    </a> -->
+    {% if not_end %}
+      <a href="/next" class="btn btn-primary" style="float:right;" type="button">
+        <span class="glyphicon glyphicon-arrow-right"></span>
+      </a>
+    <!-- {% else %}
+      <a href="/next" class="btn btn-primary" style="float:right;" type="button">
+        <span class="glyphicon glyphicon-ok"> </span>
+      </a -->
+    {% endif %}
+    <!-- <div style="display:none;">
+        <img id="source" src="image/{{ image }}">
+    </div> -->
+    <!-- <script src="{{ url_for('static', filename='js/tagger.js') }}"></script> -->
+    <script>
+      var labels = {{ labels|tojson|safe }};
+      var c = document.getElementById("canvas");
+      var ctx = c.getContext("2d");
+      ctx.strokeStyle = "blue";
+      ctx.fillStyle = "blue";
+      var drawLabels = function(id, xMin, xMax, yMin, yMax) {
+        ctx.rect(xMin, yMin, xMax - xMin, yMax - yMin);
+        ctx.lineWidth="3";
+        ctx.stroke();
+        ctx.font = "10px Arial";
+        ctx.fillText("id: " + id, xMin,yMin);
+      };
+      // var image = document.getElementById('source');
+      var image = new Image();
+      console.log(image);
+      image.onload = function(e) {
+        ctx.canvas.width = image.width;
+        ctx.canvas.height = image.height;
+        c.width = image.width;
+        c.height = image.height;
+        ctx.drawImage(image, 0, 0);
+        console.log(labels);
+        for (i = 0; i < labels.length; i++){
+            drawLabels(labels[i].id, labels[i].xMin, labels[i].xMax, labels[i].yMin, labels[i].yMax);
+        }
+      };
+      image.style.display="block";
+      image.src = "image/{{ image }}";
+
+      var clicked = false;
+      var fPoint = {};
+      c.onclick = function(e) {
+        console.log(clicked);
+        if (!clicked) {
+            var x = (image.width / c.scrollWidth) * e.offsetX;
+            var y = (image.height / c.scrollHeight) * e.offsetY;
+            console.log(e);
+            // ctx.beginPath();
+            // ctx.arc(x, y, image.width / 100, 0, 2*Math.PI, false);
+            // ctx.fillStyle = "green";
+            // ctx.fill();
+            ctx.stroke();
+            fPoint = {
+              x: x,
+              y: y
+            };
+        } else {
+            var x = (image.width / c.scrollWidth) * e.offsetX;
+            var y = (image.height / c.scrollHeight) * e.offsetY;
+            var xMin;
+            var xMax;
+            var yMin;
+            var yMin;
+            if (x > fPoint.x) {
+                xMax = x;
+                xMin = fPoint.x;
+            } else {
+                xMax = fPoint.x;
+                xMin = x;
+            }
+            if (y > fPoint.y) {
+              yMax = y;
+              yMin = fPoint.y;
+            } else {
+              yMax = fPoint.y;
+              yMin = y;
+            }
+            // ctx.rect(xMin, yMin, xMax - xMin, yMax - yMin);
+            // ctx.stroke();
+            // ctx.font = "10px Arial";
+            // ctx.fillText("id: " + labels.length + 1, xMin,yMin);
+            // drawLabels(xMin, xMax, yMin, yMax);
+            // ctx.fillStyle = "#000000";
+            // ctx.strokeStyle = "#000000";
+            fPoint = {};
+            // redirect to add
+            window.location.replace("/add/" + (labels.length + 1) +
+            "?xMin=" + xMin +
+            "&xMax=" + xMax +
+            "&yMin=" + yMin +
+            "&yMax=" + yMax);
+        }
+        clicked = !clicked;
+      };
+
+      document.onkeydown = function(e) {
+        if ("key" in e) {
+          if(e.key == "Escape" || e.key == "Esc") {
+            clicked = false;
+            // ctx.fillStyle = "#000000";
+            // ctx.strokeStyle = "#000000";
+            fPoint = {};
+          }
+        }
+      };
+    </script>
+</div>
+</body>
+</html>

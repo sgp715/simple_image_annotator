@@ -71,8 +71,9 @@ def images(f):
 
 if __name__ == "__main__":
     args = sys.argv
-    if len(args) != 2:
+    if len(args) <= 1:
         print("app.py [images_dir]")
+        exit()
     app.config["IMAGES"] = args[1]
     app.config["LABELS"] = []
     files = None

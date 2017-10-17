@@ -1,6 +1,7 @@
 import sys
 from os import walk
 import csv
+import argparse
 
 from flask import Flask, redirect, url_for, request
 from flask import render_template
@@ -49,7 +50,7 @@ def add(id):
     xMax = request.args.get("xMax")
     yMin = request.args.get("yMin")
     yMax = request.args.get("yMax")
-    app.config["LABELS"].append({"id":id, "name":None, "xMin":xMin, "xMax":xMax, "yMin":yMin, "yMax":yMax})
+    app.config["LABELS"].append({"id":id, "name":"", "xMin":xMin, "xMax":xMax, "yMin":yMin, "yMax":yMax})
     return redirect(url_for('tagger'))
 
 @app.route('/label/<id>')
@@ -70,11 +71,14 @@ def images(f):
 
 
 if __name__ == "__main__":
-    args = sys.argv
-    if len(args) <= 1:
-        print("app.py [images_dir]")
-        exit()
-    app.config["IMAGES"] = args[1]
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('dir', type=str, help='specify the images directory')
+    args = parser.parse_args()
+    directory = args.dir
+    if directory[len(directory) - 1] != "/":
+         directory += "/"
+    app.config["IMAGES"] = directory
     app.config["LABELS"] = []
     files = None
     for (dirpath, dirnames, filenames) in walk(app.config["IMAGES"]):

@@ -77,9 +77,9 @@
       var labels = {{ labels|tojson|safe }};
       var c = document.getElementById("canvas");
       var ctx = c.getContext("2d");
-      ctx.strokeStyle = "blue";
-      ctx.fillStyle = "blue";
       var drawLabels = function(id, xMin, xMax, yMin, yMax) {
+        ctx.strokeStyle = "pink";
+        ctx.fillStyle = "pink";
         ctx.rect(xMin, yMin, xMax - xMin, yMax - yMin);
         ctx.lineWidth="3";
         ctx.stroke();
@@ -111,11 +111,12 @@
             var x = (image.width / c.scrollWidth) * e.offsetX;
             var y = (image.height / c.scrollHeight) * e.offsetY;
             console.log(e);
-            // ctx.beginPath();
-            // ctx.arc(x, y, image.width / 100, 0, 2*Math.PI, false);
-            // ctx.fillStyle = "green";
-            // ctx.fill();
-            ctx.stroke();
+            ctx.strokeStyle = "pink";
+            ctx.fillStyle = "pink";
+            ctx.beginPath();
+            ctx.arc(x, y, 3, 0, 2*Math.PI, false);
+            ctx.fill();
+            // ctx.stroke();
             fPoint = {
               x: x,
               y: y
@@ -141,15 +142,7 @@
               yMax = fPoint.y;
               yMin = y;
             }
-            // ctx.rect(xMin, yMin, xMax - xMin, yMax - yMin);
-            // ctx.stroke();
-            // ctx.font = "10px Arial";
-            // ctx.fillText("id: " + labels.length + 1, xMin,yMin);
-            // drawLabels(xMin, xMax, yMin, yMax);
-            // ctx.fillStyle = "#000000";
-            // ctx.strokeStyle = "#000000";
             fPoint = {};
-            // redirect to add
             window.location.replace("/add/" + (labels.length + 1) +
             "?xMin=" + xMin +
             "&xMax=" + xMax +
@@ -163,8 +156,6 @@
         if ("key" in e) {
           if(e.key == "Escape" || e.key == "Esc") {
             clicked = false;
-            // ctx.fillStyle = "#000000";
-            // ctx.strokeStyle = "#000000";
             fPoint = {};
           }
         }

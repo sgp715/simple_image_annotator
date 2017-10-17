@@ -35,10 +35,10 @@
                             </span>
                         {% else %}
                             <input id= "{{ label.id }}" onkeydown="if (event.keyCode == 13) { label(this.id, this.value); }" type="text" class="form-control" placeholder="label name" ></input>
-                            <span class="input-group-btn">
-                                <!-- <button class="btn btn-danger" type="button">-</button> if (event.keyCode == 13) { label(this.id, this.value); } -->
-                            </span>
                         {% endif %}
+                        <span class="input-group-btn">
+                            <button id= "{{ label.id }}" class="btn btn-danger" onclick="window.location.replace('/remove/' + this.id)" type="button">-</button> if (event.keyCode == 13) { label(this.id, this.value); }
+                        </span>
                     </div>
                 </div>
                 {% endfor %}

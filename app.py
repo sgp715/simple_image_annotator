@@ -53,6 +53,14 @@ def add(id):
     app.config["LABELS"].append({"id":id, "name":"", "xMin":xMin, "xMax":xMax, "yMin":yMin, "yMax":yMax})
     return redirect(url_for('tagger'))
 
+@app.route('/remove/<id>')
+def remove(id):
+    index = int(id) - 1
+    del app.config["LABELS"][index]
+    for label in app.config["LABELS"][index:]:
+        label["id"] = str(int(label["id"]) - 1)
+    return redirect(url_for('tagger'))
+
 @app.route('/label/<id>')
 def label(id):
     name = request.args.get("name")

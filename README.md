@@ -28,6 +28,7 @@ $ python app.py /images/directory
   * press enter
 * move to next image
   * click the blue arrow button at the bottom of the page (depending on the size of the image you may have to scroll down)
+* remove label
+  click the red button on the label you would like to remove
 * check generated data
   * at the top level of the directory where the program was run, there shoud be a file called out.csv that contains the generate data
-* GIFs coming soon..

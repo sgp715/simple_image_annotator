@@ -14,7 +14,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 @app.route('/tagger')
 def tagger():
     if (app.config["HEAD"] == len(app.config["FILES"])):
-        exit()
+        return redirect(url_for('bye'))
     directory = app.config['IMAGES']
     image = app.config["FILES"][app.config["HEAD"]]
     labels = app.config["LABELS"]

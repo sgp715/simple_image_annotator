@@ -71,6 +71,7 @@ def images(f):
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
 
     parser = argparse.ArgumentParser()
     parser.add_argument('dir', type=str, help='specify the images directory')
@@ -79,6 +80,13 @@ if __name__ == "__main__":
     if directory[len(directory) - 1] != "/":
          directory += "/"
     app.config["IMAGES"] = directory
+=======
+    args = sys.argv
+    if len(args) != 2:
+        print("app.py [images_dir]")
+        exit()
+    app.config["IMAGES"] = args[1]
+>>>>>>> 6ad74beea78165ae61f9604d2f8a80ab53cd7650
     app.config["LABELS"] = []
     files = None
     for (dirpath, dirnames, filenames) in walk(app.config["IMAGES"]):

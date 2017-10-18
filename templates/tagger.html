@@ -45,7 +45,6 @@
             </div>
         </div>
     </div>
-    <!--populate-->
 </nav>
 <div id="content" class="container" style="
             width: 75%;
@@ -69,10 +68,6 @@
         <span class="glyphicon glyphicon-ok"> </span>
       </a -->
     {% endif %}
-    <!-- <div style="display:none;">
-        <img id="source" src="image/{{ image }}">
-    </div> -->
-    <!-- <script src="{{ url_for('static', filename='js/tagger.js') }}"></script> -->
     <script>
       var labels = {{ labels|tojson|safe }};
       var c = document.getElementById("canvas");
@@ -86,7 +81,6 @@
         ctx.font = "10px Arial";
         ctx.fillText("id: " + id, xMin,yMin);
       };
-      // var image = document.getElementById('source');
       var image = new Image();
       console.log(image);
       image.onload = function(e) {
@@ -116,7 +110,6 @@
             ctx.beginPath();
             ctx.arc(x, y, 3, 0, 2*Math.PI, false);
             ctx.fill();
-            // ctx.stroke();
             fPoint = {
               x: x,
               y: y

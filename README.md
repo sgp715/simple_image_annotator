@@ -1,7 +1,7 @@
 # Simple Image Annotator
 
 ## Description
-All image annotators I found either didn't work or were really hard to setup. So, I tried to make this  one simple to run and simple to use.
+All image annotators I found either didn't work or had some overhead in the setup. So, I tried to make this one simple to run and simple to use.
 
 ## Install
 * Install Flask
@@ -9,7 +9,7 @@ All image annotators I found either didn't work or were really hard to setup. So
 $ pip install Flask
 ```
 
-## Getting started
+## Getting started (Not tested on Windows)
 * cd into this directory after cloning the repo
 * start the app
 ```
@@ -19,7 +19,7 @@ $ python app.py /images/directory
 
 ## HOWTOs
 * draw a bounding box
-  * click on the image in the location of the first corner of the the bounding box you would like to add
+  * click on the image in the location of the first corner of the bounding box you would like to add
   * click again for the second corner and the box will be drawn
 * add a label for a box
   * for the box you would like to give a label, find its id (noted in the top left corner of the box)
@@ -31,4 +31,4 @@ $ python app.py /images/directory
 * remove label
   click the red button on the label you would like to remove
 * check generated data
-  * at the top level of the directory where the program was run, there shoud be a file called out.csv that contains the generate data
+  * at the top level of the directory where the program was run, there should be a file called out.csv that contains the generate data

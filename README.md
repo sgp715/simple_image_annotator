@@ -15,7 +15,21 @@ $ pip install Flask
 ```
 $ python app.py /images/directory
 ```
+    * you can also specify the file you would like the annotations output to (out.csv is the default)
+    ```
+    $ python app.py /images/directory --out test.csv
+    ```
 * open http://127.0.0.1:5000/tagger in your browser
+
+## Output
+* in keeping with simplicity, the output is to a csv file with the following fields
+    * *id* - id of the bounding box within the image
+    * *name* - name of the bounding box within the image
+    * *image* - image the bounding box is associated with
+    * *xMin* - min x value of the bounding box
+    * *xMax* - max x value of the bounding box
+    * *yMin* - min y value of the bounding box
+    * *yMax* - max y value of the bounding box
 
 ## HOWTOs
 * draw a bounding box

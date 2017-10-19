@@ -33,10 +33,10 @@ def next():
             f.write(image + "," +
             label["id"] + "," +
             label["name"] + "," +
-            label["xMin"] + "," +
-            label["xMax"] + "," +
-            label["yMin"] + "," +
-            label["yMax"] + "\n")
+            str(round(float(label["xMin"]))) + "," +
+            str(round(float(label["xMax"]))) + "," +
+            str(round(float(label["yMin"]))) + "," +
+            str(round(float(label["yMax"]))) + "\n")
     app.config["LABELS"] = []
     return redirect(url_for('tagger'))
 

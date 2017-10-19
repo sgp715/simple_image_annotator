@@ -28,7 +28,7 @@ def tagger():
 def next():
     image = app.config["FILES"][app.config["HEAD"]]
     app.config["HEAD"] = app.config["HEAD"] + 1
-    with open("out.csv",'a+') as f:
+    with open(app.config["OUT"],'a+') as f:
         for label in app.config["LABELS"]:
             f.write(image + "," +
             label["id"] + "," +
@@ -79,9 +79,9 @@ def images(f):
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser()
     parser.add_argument('dir', type=str, help='specify the images directory')
+    parser.add_argument("--out")
     args = parser.parse_args()
     directory = args.dir
     if directory[len(directory) - 1] != "/":
@@ -96,6 +96,10 @@ if __name__ == "__main__":
         exit()
     app.config["HEAD"] = 0
     app.config["FILES"] = files
+    if args.out == None:
+        app.config["OUT"] = "out.csv"
+    else:
+        app.config["OUT"] = args.out
     print(files)
     with open("out.csv",'w') as f:
         f.write("image,id,name,xMin,xMax,yMin,yMax\n")

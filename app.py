@@ -28,7 +28,7 @@ def tagger():
 def next():
     image = app.config["FILES"][app.config["HEAD"]]
     app.config["HEAD"] = app.config["HEAD"] + 1
-    with open(app.config["OUT"],'a+') as f:
+    with open(app.config["OUT"],'a') as f:
         for label in app.config["LABELS"]:
             f.write(image + "," +
             label["id"] + "," +

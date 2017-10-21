@@ -22,7 +22,7 @@ def tagger():
         # {"id":"2", "name":"image", "ymin":0, "ymax":20, "xmin":6, "ymax":50}]
     not_end = not(app.config["HEAD"] == len(app.config["FILES"]) - 1)
     print(not_end)
-    return render_template('tagger.html', not_end=not_end, directory=directory, image=image, labels=labels)
+    return render_template('tagger.html', not_end=not_end, directory=directory, image=image, labels=labels, head=app.config["HEAD"] + 1, len=len(app.config["FILES"]))
 
 @app.route('/next')
 def next():
@@ -91,7 +91,7 @@ if __name__ == "__main__":
     files = None
     for (dirpath, dirnames, filenames) in walk(app.config["IMAGES"]):
         files = filenames
-    if len(files) == 0:
+    if files == None:
         print("No files")
         exit()
     app.config["HEAD"] = 0

@@ -53,12 +53,8 @@
             z-index: 8000;
             margin-bottom:
             0px;">
-    <div style="overflow: scroll">
-        <canvas id="canvas" style="width:100%; height:90%; margin: 0; padding: 0;"></canvas>
-    </div>
-    <!-- <a href="/next" class="btn btn-primary" style="float:left;" type="button">
-      <span class="glyphicon glyphicon-arrow-left"></span>
-    </a> -->
+    <div class="row">
+    <text> {{ head }} / {{ len }} </text>
     {% if not_end %}
       <a href="/next" class="btn btn-primary" style="float:right;" type="button">
         <span class="glyphicon glyphicon-arrow-right"></span>
@@ -68,6 +64,13 @@
         <span class="glyphicon glyphicon-ok"> </span>
       </a>
     {% endif %}
+    </div>
+    <div style="overflow: scroll">
+        <canvas id="canvas" style="width:100%; height:80%; margin: 0; padding: 0;"></canvas>
+    </div>
+    <!-- <a href="/next" class="btn btn-primary" style="float:left;" type="button">
+      <span class="glyphicon glyphicon-arrow-left"></span>
+    </a> -->
     <script>
       var labels = {{ labels|tojson|safe }};
       var c = document.getElementById("canvas");
@@ -145,14 +148,14 @@
         clicked = !clicked;
       };
 
-      document.onkeydown = function(e) {
-        if ("key" in e) {
-          if(e.key == "Escape" || e.key == "Esc") {
-            clicked = false;
-            fPoint = {};
-          }
-        }
-      };
+      // document.onkeydown = function(e) {
+      //   if ("key" in e) {
+      //     if(e.key == "Escape" || e.key == "Esc") {
+      //       clicked = false;
+      //       fPoint = {};
+      //     }
+      //   }
+      // };
     </script>
 </div>
 </body>

@@ -1,5 +1,6 @@
 import sys
 from os import walk
+import imghdr
 import csv
 import argparse
 
@@ -91,11 +92,12 @@ if __name__ == "__main__":
     files = None
     for (dirpath, dirnames, filenames) in walk(app.config["IMAGES"]):
         files = filenames
+        break
     if files == None:
         print("No files")
         exit()
-    app.config["HEAD"] = 0
     app.config["FILES"] = files
+    app.config["HEAD"] = 0
     if args.out == None:
         app.config["OUT"] = "out.csv"
     else:

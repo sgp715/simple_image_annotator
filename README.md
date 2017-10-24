@@ -15,10 +15,10 @@ $ pip install Flask
 ```
 $ python app.py /images/directory
 ```
-    * you can also specify the file you would like the annotations output to (out.csv is the default)
-    ```
-    $ python app.py /images/directory --out test.csv
-    ```
+* you can also specify the file you would like the annotations output to (out.csv is the default)
+```
+$ python app.py /images/directory --out test.csv
+```
 * open http://127.0.0.1:5000/tagger in your browser
 
 ## Output

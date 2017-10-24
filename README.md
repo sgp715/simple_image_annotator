@@ -9,7 +9,7 @@ All image annotators I found either didn't work or had some overhead in the setu
 $ pip install Flask
 ```
 
-## Getting started (Not tested on Windows)
+## Getting started
 * cd into this directory after cloning the repo
 * start the app
 ```
@@ -20,6 +20,7 @@ $ python app.py /images/directory
 $ python app.py /images/directory --out test.csv
 ```
 * open http://127.0.0.1:5000/tagger in your browser
+    * only tested on Chrome
 
 ## Output
 * in keeping with simplicity, the output is to a csv file with the following fields

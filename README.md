@@ -2,6 +2,7 @@
 
 ## Description
 All image annotators I found either didn't work or had some overhead in the setup. So, I tried to make this one simple to run and simple to use.
+![action](./actionshot.png)
 
 ## Install
 * Install Flask

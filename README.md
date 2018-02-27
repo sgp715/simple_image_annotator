@@ -16,22 +16,24 @@ $ pip install Flask
 ```
 $ python app.py /images/directory
 ```
-* you can also specify the file you would like the annotations output to (out.csv is the default)
+* you can also specify the directory you would like the annotations output to (image dir is the default)
 ```
-$ python app.py /images/directory --out test.csv
+$ python app.py /images/directory --out /labels
 ```
-* open http://127.0.0.1:5000/tagger in your browser
+* specify port if you want (5555 is default)
+```
+$ python app.py /images/directory --out /labels --port 5556
+```
+* open http://127.0.0.1:5555/tagger in your browser
     * only tested on Chrome
 
 ## Output
-* in keeping with simplicity, the output is to a csv file with the following fields
-    * *id* - id of the bounding box within the image
-    * *name* - name of the bounding box within the image
-    * *image* - image the bounding box is associated with
-    * *xMin* - min x value of the bounding box
-    * *xMax* - max x value of the bounding box
-    * *yMin* - min y value of the bounding box
-    * *yMax* - max y value of the bounding box
+* This branch outputs data in KITTI format for easy consumption in DIGITS using detectnet
+  * filename is the same as the input image file prefix changed to .txt
+  * pertinent columns for detectnet are 0: label; 1: truncated; 4: xmin; 5: ymin; 6: xmax; 7: ymax
+```
+person 0.2 0 0.0 114.0 650.0 227.0 796.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+```
 
 ## HOWTOs
 * draw a bounding box
@@ -43,8 +45,10 @@ $ python app.py /images/directory --out test.csv
   * enter the name you want in the input field
   * press enter
 * move to next image
-  * click the blue arrow button at the bottom of the page (depending on the size of the image you may have to scroll down)
+  * click the blue right arrow button at the top of the page (depending on the size of the image you may have to scroll down)
+* move to the previous image
+  * click the left arrow button at the top of the page
 * remove label
   click the red button on the label you would like to remove
 * check generated data
-  * at the top level of the directory where the program was run, there should be a file called out.csv that contains the generate data
+  * the output directory should contain one .txt file per image with KITTI format data

@@ -1,7 +1,7 @@
 # Simple Image Annotator
 
 ## Description
-All image annotators I found either didn't work or had some overhead in the setup. So, I tried to make this one simple to run and simple to use.
+I modified a great simple image annotator developed by Sebastian Perez (sgp715).
 ![action](./actionshot.png)
 
 ## Install

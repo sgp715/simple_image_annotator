@@ -19,8 +19,6 @@ def tagger():
     directory = app.config['IMAGES']
     image = app.config["FILES"][app.config["HEAD"]]
     labels = app.config["LABELS"]
-    # [{"id":"1", "name":None, "ymin":0, "ymax":2, "xmin":0, "ymax":5},
-        # {"id":"2", "name":"image", "ymin":0, "ymax":20, "xmin":6, "ymax":50}]
     not_end = not(app.config["HEAD"] == len(app.config["FILES"]) - 1)
     print(not_end)
     return render_template('tagger.html', not_end=not_end, directory=directory, image=image, labels=labels, head=app.config["HEAD"] + 1, len=len(app.config["FILES"]))

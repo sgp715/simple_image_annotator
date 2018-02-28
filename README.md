@@ -1,7 +1,7 @@
 # Simple Image Annotator
 
 ## Description
-I modified a great simple image annotator developed by Sebastian Perez (sgp715).
+I modified a great simple image annotator developed by Sebastian Perez (sgp715) to facilitate browsing forward and backward and to output data in per-image files in KITTI format for easy consumption for object detection using detectnet.
 ![action](./actionshot.png)
 
 ## Install

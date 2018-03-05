@@ -16,7 +16,7 @@ app.config['CURFIL'] = ""
 
 def writeLabels():
     image = app.config["FILES"][app.config["HEAD"]]
-    with open(app.config["OUTDIR"]+image.replace('jpg','txt'),'w') as f:
+    with open(app.config["OUTDIR"]+re.sub('\.(jpg|jpeg|png|tif)','.txt',image),'w') as f:
         for label in app.config["LABELS"]:
             if label["name"] == "":continue
             trunc = "0.0"
@@ -27,8 +27,8 @@ def writeLabels():
             trunc + " "
             "0 0.0 " +
             str(round(float(label["xMin"]))) + " " +
-            str(round(float(label["xMax"]))) + " " +
             str(round(float(label["yMin"]))) + " " +
+            str(round(float(label["xMax"]))) + " " +
             str(round(float(label["yMax"]))) + " " +
             "0.0 0.0 0.0 0.0 0.0 0.0 0.0\n")
     f.close()
@@ -45,14 +45,14 @@ def tagger():
     labels = app.config["LABELS"]
     if not image == app.config["CURFIL"]:
         app.config["CURFIL"] = image
-        current_file = app.config["OUTDIR"]+app.config["CURFIL"].replace('jpg','txt')
+        current_file = app.config["OUTDIR"]+re.sub('\.(jpg|jpeg|png|tif)','.txt',app.config["CURFIL"])
         if os.path.isfile(current_file):
             for idx,line in enumerate(open(current_file,'r').readlines()):
                 larr = line.strip().split(" ")
                 lname = larr[0]
                 if not larr[1] == "0.0":
                     lname = lname + "-trunc-" + larr[1]
-                app.config["LABELS"].append({"id":idx+1, "name":lname, "xMin":float(larr[4]), "xMax":float(larr[5]), "yMin":float(larr[6]), "yMax":float(larr[7])})
+                app.config["LABELS"].append({"id":idx+1, "name":lname, "xMin":float(larr[4]), "yMin":float(larr[5]), "xMax":float(larr[6]), "yMax":float(larr[7])})
     not_end = not(app.config["HEAD"] == len(app.config["FILES"]) - 1)
     not_begin = app.config["HEAD"] > 0
     return render_template('tagger.html', not_end=not_end, not_begin=not_begin, directory=directory, image=image, labels=labels, head=app.config["HEAD"] + 1, len=len(app.config["FILES"]))

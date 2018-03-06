@@ -64,6 +64,11 @@
         <span class="glyphicon glyphicon-ok"> </span>
       </a>
     {% endif %}
+    <!--{% if not_begin %}-->
+      <!--<a href="/prev" class="btn btn-primary" style="float:right;" type="button">-->
+        <!--<span class="glyphicon glyphicon-arrow-left"></span>-->
+      <!--</a>-->
+    <!--{% endif %}-->
     </div>
     <div style="overflow: scroll">
         <canvas id="canvas" style="width:100%; height:80%; margin: 0; padding: 0;"></canvas>
@@ -81,7 +86,7 @@
         ctx.rect(xMin, yMin, xMax - xMin, yMax - yMin);
         ctx.lineWidth="3";
         ctx.stroke();
-        ctx.font = "10px Arial";
+        ctx.font = "20px Arial";
         ctx.fillText("id: " + id, xMin,yMin);
       };
       var image = new Image();

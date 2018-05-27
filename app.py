@@ -16,7 +16,7 @@ app.config['CURFIL'] = ""
 
 def writeLabels():
     image = app.config["FILES"][app.config["HEAD"]]
-    with open(app.config["OUTDIR"]+re.sub('\.(jpg|jpeg|png|tif)','.txt',image),'w') as f:
+    with open(app.config["OUTDIR"]+re.sub('\.(jpg|jpeg|png)','.txt',image),'w') as f:
         for label in app.config["LABELS"]:
             if label["name"] == "":continue
             trunc = "0.0"
@@ -45,7 +45,7 @@ def tagger():
     labels = app.config["LABELS"]
     if not image == app.config["CURFIL"]:
         app.config["CURFIL"] = image
-        current_file = app.config["OUTDIR"]+re.sub('\.(jpg|jpeg|png|tif)','.txt',app.config["CURFIL"])
+        current_file = app.config["OUTDIR"]+re.sub('\.(jpg|jpeg|png)','.txt',app.config["CURFIL"])
         if os.path.isfile(current_file):
             for idx,line in enumerate(open(current_file,'r').readlines()):
                 larr = line.strip().split(" ")
@@ -55,7 +55,7 @@ def tagger():
                 app.config["LABELS"].append({"id":idx+1, "name":lname, "xMin":float(larr[4]), "yMin":float(larr[5]), "xMax":float(larr[6]), "yMax":float(larr[7])})
     not_end = not(app.config["HEAD"] == len(app.config["FILES"]) - 1)
     not_begin = app.config["HEAD"] > 0
-    return render_template('tagger.html', not_end=not_end, not_begin=not_begin, directory=directory, image=image, labels=labels, head=app.config["HEAD"] + 1, len=len(app.config["FILES"]))
+    return render_template('tagger.html', not_end=not_end, not_begin=not_begin, directory=directory, image=image, labels=labels, head=app.config["HEAD"] + 1, len=len(app.config["FILES"]), filename=image)
 
 @app.route('/next')
 def next():
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     app.config["LABELS"] = []
     files = None
     for (dirpath, dirnames, filenames) in walk(app.config["IMAGES"]):
-        files = filenames
+        files = sorted(filenames)
         break
     if files == None:
         print("No files")

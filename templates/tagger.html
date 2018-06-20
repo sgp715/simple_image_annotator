@@ -34,7 +34,7 @@
                                 <!-- <button class="btn btn-danger" type="button">-</button> -->
                             </span>
                         {% else %}
-                            <input id= "{{ label.id }}" onkeydown="if (event.keyCode == 13) { label(this.id, this.value); }" type="text" class="form-control" placeholder="label name" ></input>
+                            <input id= "{{ label.id }}" onkeydown="if (event.keyCode == 13) { label(this.id, this.value); }" type="text" class="form-control" placeholder="label name" autofocus></input>
                         {% endif %}
                         <span class="input-group-btn">
                             <button id= "{{ label.id }}" class="btn btn-danger" onclick="window.location.replace('/remove/' + this.id)" type="button">-</button> if (event.keyCode == 13) { label(this.id, this.value); }

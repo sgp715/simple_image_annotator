@@ -20,6 +20,14 @@ $ python app.py /images/directory
 ```
 $ python app.py /images/directory --out test.csv
 ```
+* Additionally, you can specify a separator character which will split the file names into string and integer portions when sorting the file order ('_' is the default)
+```
+$ python app.py /images/directory -s "_"
+```
+* If you do not wish to sort the order in which the images appear, set the no sort option to True (False is the default)
+```
+$ python app.py /images/directory --out test.csv --no_sort True
+```
 * open http://127.0.0.1:5000/tagger in your browser
     * only tested on Chrome
 

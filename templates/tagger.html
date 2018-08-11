@@ -66,7 +66,10 @@
     {% endif %}
     </div>
     <div style="overflow: scroll">
-        <canvas id="canvas" style="width:100%; height:80%; margin: 0; padding: 0;"></canvas>
+        <div style="position: relative" id="holder">
+            <canvas id="overlay" style="position: absolute; left: 0; top: 0; z-index: 1; width:100%; height:80%; margin: 0; padding: 0;"></canvas>
+            <canvas id="canvas" style="position: absolute; left: 0; top: 0; z-index: 0; width:100%; height:80%; margin: 0; padding: 0;"></canvas>
+        </div>
     </div>
     <!-- <a href="/next" class="btn btn-primary" style="float:left;" type="button">
       <span class="glyphicon glyphicon-arrow-left"></span>
@@ -74,7 +77,10 @@
     <script>
       var labels = {{ labels|tojson|safe }};
       var c = document.getElementById("canvas");
+      var overlay = document.getElementById("overlay");
+      var holder = document.getElementById("holder");
       var ctx = c.getContext("2d");
+      var overlayCtx = overlay.getContext("2d");
       var drawLabels = function(id, xMin, xMax, yMin, yMax) {
         ctx.strokeStyle = "pink";
         ctx.fillStyle = "pink";
@@ -87,10 +93,16 @@
       var image = new Image();
       console.log(image);
       image.onload = function(e) {
+        holder.style.height = image.height + "px";
+        holder.style.width = image.width + "px";
         ctx.canvas.width = image.width;
         ctx.canvas.height = image.height;
         c.width = image.width;
         c.height = image.height;
+        overlayCtx.canvas.width = image.width;
+        overlayCtx.canvas.height = image.height;
+        overlay.width = image.width;
+        overlay.height = image.height;
         ctx.drawImage(image, 0, 0);
         console.log(labels);
         for (i = 0; i < labels.length; i++){
@@ -102,7 +114,24 @@
 
       var clicked = false;
       var fPoint = {};
-      c.onclick = function(e) {
+      
+      overlay.onmousemove = function(e) {
+        const w = overlay.width;
+        const h = overlay.height;
+        const x = (image.width / overlay.scrollWidth) * e.offsetX;
+        const y = (image.height / overlay.scrollHeight) * e.offsetY;
+        overlayCtx.clearRect(0, 0, w, h);
+        overlayCtx.beginPath();
+        overlayCtx.strokeStyle = "blue";
+        overlayCtx.moveTo(0,y);
+        overlayCtx.lineTo(w,y);
+        overlayCtx.stroke();
+        overlayCtx.moveTo(x,0);
+        overlayCtx.lineTo(x,h);
+        overlayCtx.stroke();
+      }
+
+      overlay.onclick = function(e) {
         console.log(clicked);
         if (!clicked) {
             var x = (image.width / c.scrollWidth) * e.offsetX;
